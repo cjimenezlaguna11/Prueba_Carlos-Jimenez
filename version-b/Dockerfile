@@ -27,7 +27,7 @@ RUN composer install --no-dev --no-interaction --prefer-dist --classmap-authorit
 FROM php-base AS production
 ENV APP_ENV=production APP_DEBUG=false APP_LOCALE=it LOG_CHANNEL=stderr SESSION_DRIVER=array CACHE_STORE=array CATALOG_SOURCE=json PORT=8080
 COPY version-b/app/ ./app/
-COPY version-b/artisan ./
+COPY version-b/artisan version-b/composer.json ./
 COPY version-b/bootstrap/ ./bootstrap/
 COPY version-b/config/ ./config/
 COPY version-b/routes/ ./routes/
@@ -43,5 +43,5 @@ RUN printf 'Listen ${PORT}\n' > /etc/apache2/ports.conf && \
     mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8080
-RUN php -d display_errors=stderr -d zend.exception_ignore_args=1 artisan view:cache --no-ansi -vvv
-CMD ["sh", "-c", "php -d display_errors=stderr -d zend.exception_ignore_args=1 artisan optimize --no-ansi -vvv && exec apache2-foreground"]
+RUN php artisan view:cache --no-ansi
+CMD ["sh", "-c", "php artisan optimize --no-ansi && exec apache2-foreground"]
