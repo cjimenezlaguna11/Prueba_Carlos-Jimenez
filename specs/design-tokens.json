@@ -89,7 +89,6 @@
       "search-height": "3.5rem",
       "header-small": "4rem",
       "header-wide": "4.5rem",
-      "scroll-offset": "5.5rem",
       "focus-width": "3px",
       "focus-offset": "2px",
       "cover-ratio": "5 / 3"
@@ -198,8 +197,7 @@
       "active": "{semantic.color-interactive-active}",
       "focus": "{semantic.color-focus}",
       "height-small": "{primitives.size.header-small}",
-      "height-wide": "{primitives.size.header-wide}",
-      "scroll-offset": "{primitives.size.scroll-offset}"
+      "height-wide": "{primitives.size.header-wide}"
     },
     "hero": {
       "gradient-start": "{semantic.color-hero-start}",

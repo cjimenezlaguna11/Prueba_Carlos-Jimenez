@@ -32,6 +32,8 @@
 - Enable submission only when the client handler is ready. The simulated form keeps values in memory only and has no endpoint or database writes.
 
 ## Navigation
+
+Section links align the destination with the bottom of the sticky header, including its border. Keyboard activation moves focus to the destination and keeps the focus ring visible.
 Navigation links must target real sections or implemented views (or a clearly labeled placeholder demo without misleading behavior). `Accedi` may be visually non-functional per exercise, but must not masquerade as a working authentication flow.
 
 ## Appearance

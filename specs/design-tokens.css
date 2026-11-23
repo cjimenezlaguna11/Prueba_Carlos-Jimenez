@@ -79,7 +79,6 @@
   --ds-base-size-search-height: 3.5rem;
   --ds-base-size-header-small: 4rem;
   --ds-base-size-header-wide: 4.5rem;
-  --ds-base-size-scroll-offset: 5.5rem;
   --ds-base-size-focus-width: 3px;
   --ds-base-size-focus-offset: 2px;
   --ds-base-size-cover-ratio: 5 / 3;
@@ -135,7 +134,6 @@
   --ds-header-focus: var(--ds-color-focus);
   --ds-header-height-small: var(--ds-base-size-header-small);
   --ds-header-height-wide: var(--ds-base-size-header-wide);
-  --ds-header-scroll-offset: var(--ds-base-size-scroll-offset);
   --ds-hero-gradient-start: var(--ds-color-hero-start);
   --ds-hero-gradient-end: var(--ds-color-page);
   --ds-hero-title: var(--ds-color-text);

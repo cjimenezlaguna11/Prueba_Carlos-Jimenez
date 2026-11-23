@@ -59,7 +59,11 @@
   html {
     background: var(--ds-color-page);
     scroll-behavior: smooth;
-    scroll-padding-top: var(--ds-header-scroll-offset);
+    scroll-padding-top: calc(var(--ds-header-height-small) + 1px);
+
+    @variant md {
+      scroll-padding-top: calc(var(--ds-header-height-wide) + 1px);
+    }
   }
 
   body {
@@ -72,6 +76,14 @@
   :focus-visible {
     outline: var(--ds-focus-width) solid var(--focus-color, var(--ds-color-focus));
     outline-offset: var(--ds-focus-offset);
+  }
+
+  :where(main, main > section)[tabindex="-1"]:focus-visible {
+    outline-offset: calc(-1 * var(--ds-focus-width));
+  }
+
+  input#cerca {
+    scroll-margin-top: calc(var(--ds-focus-width) + var(--ds-focus-offset));
   }
 
   footer { --focus-color: var(--ds-footer-focus); }

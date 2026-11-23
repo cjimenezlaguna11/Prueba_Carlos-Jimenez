@@ -340,3 +340,45 @@ test('B applies saved Dark before the bundle and falls back to the OS without Ja
     await Promise.all([saved.close(), disabled.close()])
   }
 })
+
+test('header links keep their targets aligned below the sticky header', async () => {
+  for (const url of urls) {
+    for (const width of [375, 768, 1280]) {
+      const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' })
+      try {
+        await ready(page, url)
+        const links = [['Test', 'catalogo'], ['Formazione', 'catalogo'], ['Risorse', 'guida'], ['Contatti', 'contatti']]
+        for (const [name, id] of links) {
+          if (width < 1024) await mobileMenu(page).click()
+          const link = page.locator('header').getByRole('navigation', { name: 'Principale' }).getByRole('link', { name, exact: true })
+          if (name === 'Risorse') await link.press('Enter')
+          else await link.click()
+          await page.waitForFunction(id => document.activeElement?.id === id, id, { timeout: 5000 }).catch(async error => {
+            const [activeId, hash] = await page.evaluate(() => [document.activeElement?.id, location.hash])
+            throw new Error(url + ' at ' + width + 'px: ' + name + ' focused ' + activeId + ' at ' + hash, { cause: error })
+          })
+          const { gap, focusVisible, outlineOffset } = await page.locator('#' + id).evaluate(target => ({
+            gap: target.getBoundingClientRect().top - document.querySelector('header').getBoundingClientRect().bottom,
+            focusVisible: target.matches(':focus-visible'),
+            outlineOffset: parseFloat(getComputedStyle(target).outlineOffset),
+          }))
+          assert.ok(Math.abs(gap) <= 1, url + ' at ' + width + 'px: ' + name + ' left ' + gap + 'px')
+          if (name === 'Risorse') {
+            assert.ok(focusVisible, 'The keyboard target has visible focus')
+            assert.ok(outlineOffset < 0, 'The header should not cover the focus ring')
+          }
+        }
+        await page.locator('header').getByRole('link', { name: 'Cerca nel catalogo' }).click()
+        await page.waitForFunction(() => document.activeElement?.id === 'cerca')
+        const searchClearance = await page.locator('#cerca').evaluate(input => {
+          const css = getComputedStyle(input)
+          const gap = input.getBoundingClientRect().top - document.querySelector('header').getBoundingClientRect().bottom
+          return gap - parseFloat(css.outlineWidth) - parseFloat(css.outlineOffset)
+        })
+        assert.ok(searchClearance >= -1, url + ' at ' + width + 'px: search focus clearance was ' + searchClearance + 'px')
+      } finally {
+        await page.close()
+      }
+    }
+  }
+})
