@@ -1,0 +1,259 @@
+.catalog, .contact
+  padding-block space(16)
+  @media (min-width: lg)
+    padding-block space(24)
+
+.catalog
+  &__controls, &__unavailable
+    margin-top space(10)
+    border 1px solid var(--ds-color-border-subtle)
+    border-radius var(--ds-card-radius)
+  &__controls
+    background var(--ds-search-panel)
+    padding space(4)
+    @media (min-width: sm)
+      padding space(5)
+  &__unavailable
+    border-color var(--ds-color-border-control)
+    background var(--ds-color-surface-subtle)
+    padding space(5)
+  &__search
+    position relative
+  &__search-icon, &__search-clear
+    position absolute
+    top 50%
+    translate 0 -50%
+  &__search-icon
+    pointer-events none
+    left space(4)
+    color var(--ds-color-text-muted)
+  &__search-clear
+    right space(1.5)
+  &__input
+    height var(--ds-search-height)
+    padding-inline space(12) space(14)
+  &__filters
+    display flex
+    flex-wrap wrap
+    gap space(2)
+    margin-top space(4)
+  &__results
+    display flex
+    flex-wrap wrap
+    align-items center
+    justify-content space-between
+    gap space(1) space(4)
+    margin-top space(8)
+  &__count
+    type('small', calc(1.25 / .875))
+    weight('medium')
+    color var(--ds-color-text-muted)
+    strong
+      color var(--ds-color-text)
+  &__grid
+    display grid
+    grid-template-columns minmax(0, 1fr)
+    gap var(--ds-layout-card-gap)
+    margin-top space(5)
+    @media (min-width: md)
+      grid-template-columns repeat(2, minmax(0, 1fr))
+    @media (min-width: lg)
+      grid-template-columns repeat(3, minmax(0, 1fr))
+  &__item
+    min-width 0
+  &__empty
+    display flex
+    flex-direction column
+    align-items center
+    margin-top space(5)
+    border 1px dashed var(--ds-color-border-control)
+    border-radius var(--ds-card-radius)
+    padding space(16) space(6)
+    background var(--ds-color-surface-subtle)
+    text-align center
+  &__empty-icon
+    colored-icon(14, var(--ds-pill-radius), var(--ds-color-surface))
+    box-shadow var(--ds-card-shadow)
+  &__empty-title
+    margin-top space(5)
+    type('card-title', calc(1.75 / 1.25))
+    weight('bold')
+  &__empty-copy
+    margin-top space(2)
+    max-width 28rem
+    color var(--ds-color-text-muted)
+  &__empty-reset
+    margin-top space(6)
+
+.category-pill
+  display inline-flex
+  min-height var(--ds-control-target)
+  max-width 100%
+  align-items center
+  gap space(2)
+  border 1px solid var(--ds-pill-border)
+  border-radius var(--ds-pill-radius)
+  padding space(1.5) space(4)
+  text-align left
+  type('small', calc(1.25 / .875))
+  weight('semibold')
+  color var(--ds-pill-text)
+  background var(--ds-pill-bg)
+  transition-colors()
+  &:hover
+    background var(--ds-pill-hover)
+  &:active
+    background var(--ds-pill-active)
+  &__check
+    display none
+  &[aria-pressed='true']
+    background var(--ds-pill-selected-bg)
+    color var(--ds-pill-selected-text)
+    border-color var(--ds-pill-selected-bg)
+    .category-pill__check
+      display block
+      flex-shrink 0
+
+.product-card
+  display flex
+  height 100%
+  min-width 0
+  flex-direction column
+  overflow hidden
+  border 1px solid var(--ds-color-border-subtle)
+  border-radius var(--ds-card-radius)
+  background var(--ds-card-bg)
+  box-shadow var(--ds-card-shadow)
+  transition box-shadow var(--ds-transition-fast) cubic-bezier(.4,0,.2,1), translate var(--ds-transition-fast) cubic-bezier(.4,0,.2,1), border-color var(--ds-transition-fast) cubic-bezier(.4,0,.2,1)
+  @media (hover: hover)
+    &:hover
+      translate 0 calc(-1 * var(--ds-base-space-1))
+      border-color var(--ds-color-text-interactive)
+      box-shadow var(--ds-card-shadow-hover)
+  &__cover
+    position relative
+  &__image
+    aspect-ratio var(--ds-card-cover-ratio)
+    width 100%
+    object-fit cover
+  &__kind
+    position absolute
+    top space(3)
+    left space(3)
+    border-radius var(--ds-pill-radius)
+    padding space(1) space(2.5)
+    type('caption', calc(1 / .75))
+    weight('semibold')
+    background var(--ds-color-surface)
+    color var(--ds-color-text)
+    box-shadow var(--ds-card-shadow)
+  &__body
+    display flex
+    min-width 0
+    flex 1
+    flex-direction column
+    padding space(5)
+  &__classification
+    display flex
+    flex-wrap wrap
+    align-items center
+    justify-content space-between
+    gap space(2)
+  &__category
+    type('caption', calc(1 / .75))
+    weight('semibold')
+    letter-spacing .05em
+    color var(--ds-color-text-interactive)
+    text-transform uppercase
+  &__format
+    display inline-flex
+    align-items center
+    gap space(1.5)
+    border 1px solid var(--ds-color-border-subtle)
+    border-radius var(--ds-pill-radius)
+    background var(--ds-badge-bg)
+    padding space(1) space(2.5)
+    type('caption', calc(1 / .75))
+    weight('semibold')
+    color var(--ds-badge-text)
+  &__dot
+    width space(1.5)
+    height space(1.5)
+    border-radius var(--ds-pill-radius)
+    background var(--ds-color-accent)
+  &__title
+    margin-top space(3)
+    type('card-title', var(--ds-base-font-leading-snug))
+    weight('bold')
+    letter-spacing -.025em
+    overflow-wrap break-word
+  &__subtitle
+    display block
+    margin-top space(.5)
+    type('label')
+    weight('medium')
+    color var(--ds-color-text-muted)
+  &__description
+    margin-top space(3)
+    type('small', var(--ds-base-font-leading-relaxed))
+    color var(--ds-color-text-muted)
+  &__bottom
+    margin-top auto
+    padding-top space(5)
+  &__prices
+    display flex
+    flex-wrap wrap
+    align-items baseline
+    gap space(2)
+    border-top 1px solid var(--ds-color-border-subtle)
+    padding-top space(4)
+  &__discount
+    type('price', calc(2 / 1.5))
+    weight('extrabold')
+    letter-spacing -.025em
+  &__original
+    type('small', calc(1.25 / .875))
+    color var(--ds-price-original)
+  &__actions
+    display grid
+    grid-template-columns minmax(0, 1fr) auto
+    align-items start
+    gap space(2)
+    margin-top space(4)
+  &__details-button
+    width 100%
+    padding-inline space(2)
+  &__details-close
+    display none
+  &__details[open]
+    .product-card__details-open
+      display none
+    .product-card__details-close
+      display inline
+  &__details-copy
+    margin-top space(3)
+    border-radius var(--ds-control-radius)
+    padding space(3)
+    type('small', var(--ds-base-font-leading-relaxed))
+    background var(--ds-color-surface-subtle)
+    color var(--ds-color-text-muted)
+
+.metadata
+  margin-top space(4)
+  type('small', calc(1.25 / .875))
+  &__row
+    display grid
+    grid-template-columns auto minmax(0, 1fr)
+    align-items start
+    gap space(2)
+    & + &
+      margin-top space(2)
+    p
+      overflow-wrap break-word
+    strong
+      weight('semibold')
+  &__icon
+    display flex
+    height 1lh
+    align-items center
+    color var(--ds-color-text-interactive)

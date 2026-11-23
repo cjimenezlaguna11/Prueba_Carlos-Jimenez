@@ -1,0 +1,78 @@
+.contact
+  &__inner
+    display grid
+    gap space(12)
+    @media (min-width: lg)
+      grid-template-columns minmax(0, .9fr) minmax(0, 1.1fr)
+      gap space(20)
+  &__copy
+    line-height var(--ds-base-font-leading-relaxed)
+  &__demo
+    display flex
+    align-items center
+    gap space(3)
+    margin-top space(8)
+    type('label')
+  &__icon
+    colored-icon(10, var(--ds-control-radius))
+    flex-shrink 0
+
+.contact-panel
+  min-width 0
+  border 1px solid var(--ds-color-border-subtle)
+  border-radius var(--ds-card-radius)
+  background var(--ds-card-bg)
+  padding space(6)
+  box-shadow var(--ds-card-shadow)
+  @media (min-width: sm)
+    padding space(8)
+  &__fields
+    min-width 0
+    > :not(legend, :last-child)
+      margin-bottom space(5)
+  &__label
+    display block
+    margin-bottom space(1.5)
+    type('small', calc(1.25 / .875))
+    weight('semibold')
+    span
+      color var(--ds-feedback-error-text)
+  &__input
+    height space(12)
+  &__message
+    display block
+    padding-block space(3)
+  &__error
+    display flex
+    align-items start
+    gap space(1.5)
+    margin-top space(1.5)
+    type('small', calc(1.25 / .875))
+    weight('medium')
+    color var(--ds-feedback-error-text)
+  &__required
+    type('caption', calc(1 / .75))
+    color var(--ds-color-text-muted)
+  &__submit
+    width 100%
+    min-height space(12)
+  &__success
+    display flex
+    flex-direction column
+    align-items center
+    padding space(10) space(2)
+    text-align center
+  &__success-icon
+    colored-icon(16, var(--ds-pill-radius), var(--ds-feedback-success-bg))
+    color var(--ds-feedback-success-text)
+  &__success-title
+    margin-top space(6)
+    type('price', calc(2 / 1.5))
+    weight('bold')
+    color var(--ds-feedback-success-text)
+  &__success-copy
+    margin-top space(2)
+    max-width 24rem
+    color var(--ds-color-text-muted)
+  &__restart
+    margin-top space(6)

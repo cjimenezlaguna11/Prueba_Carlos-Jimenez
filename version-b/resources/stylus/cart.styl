@@ -1,0 +1,147 @@
+.cart-drawer
+  position fixed
+  inset 0 0 0 auto
+  margin 0
+  padding 0
+  width calc(100% - var(--ds-layout-gutter))
+  max-width 28rem
+  height 100dvh
+  max-height none
+  overflow hidden
+  background var(--ds-color-surface)
+  color var(--ds-color-text)
+  box-shadow var(--ds-card-shadow-hover)
+  &[open]
+    animation cart-enter var(--ds-transition-fast) ease-out
+  &::backdrop
+    background unquote('color-mix(in srgb, var(--ds-base-color-night-footer) 68%, transparent)')
+    backdrop-filter blur(2px)
+  &__layout
+    display flex
+    height 100%
+    min-height 0
+    flex-direction column
+  &__heading
+    display flex
+    flex-shrink 0
+    align-items center
+    justify-content space-between
+    gap space(2)
+    border-bottom 1px solid var(--ds-color-border-subtle)
+    padding space(3) space(4)
+    @media (min-width: sm)
+      padding-inline space(6)
+  &__title
+    type('card-title', calc(1.75 / 1.25))
+    weight('bold')
+    letter-spacing -.025em
+  &__units, &__muted
+    type('small', calc(1.25 / .875))
+    color var(--ds-color-text-muted)
+  &__units
+    margin-top space(1)
+  &__scroll
+    min-height 0
+    flex 1
+    overflow-y auto
+    overscroll-behavior contain
+    padding-inline space(4)
+    @media (min-width: sm)
+      padding-inline space(6)
+  &__empty
+    display flex
+    flex-direction column
+    align-items center
+    gap space(3)
+    padding-block space(10)
+    text-align center
+  &__empty-icon
+    colored-icon(14, var(--ds-pill-radius))
+  &__empty-title
+    type('lead', calc(1.75 / 1.125))
+    weight('bold')
+  &__bottom
+    flex-shrink 0
+    border-top 1px solid var(--ds-color-border-subtle)
+    padding space(4)
+    background var(--ds-color-surface)
+    > :not([hidden]) ~ :not([hidden])
+      margin-top space(3)
+    @media (min-width: sm)
+      padding-inline space(6)
+  &__subtotal
+    display flex
+    flex-wrap wrap
+    align-items center
+    justify-content space-between
+    gap space(2)
+    type('lead', calc(1.75 / 1.125))
+    weight('bold')
+    span:last-child
+      font-variant-numeric tabular-nums
+  &__action
+    width 100%
+
+html:has(.cart-drawer[open])
+  overflow hidden
+
+@keyframes cart-enter
+  from
+    transform translateX(100%)
+  to
+    transform translateX(0)
+
+.cart-line
+  display grid
+  grid-template-columns auto minmax(0, 1fr)
+  align-items start
+  gap space(3)
+  border-bottom 1px solid var(--ds-color-border-subtle)
+  padding-block space(4)
+  &:last-child
+    border 0
+  &__image
+    width space(16)
+    border-radius var(--ds-control-radius)
+    @media (min-width: sm)
+      width space(20)
+  &__body
+    min-width 0
+  &__name
+    type('small', calc(1.25 / .875))
+    weight('bold')
+    overflow-wrap break-word
+  &__info
+    margin-top space(1)
+    type('small', calc(1.25 / .875))
+    color var(--ds-color-text-muted)
+  &__quantity
+    display flex
+    flex-wrap wrap
+    align-items center
+    gap space(1)
+    margin-top space(2)
+  &__count
+    min-width space(5)
+    text-align center
+    type('small', calc(1.25 / .875))
+    font-variant-numeric tabular-nums
+  &__total
+    margin-top space(2)
+    type('small', calc(1.25 / .875))
+    weight('semibold')
+
+.cart-notice--visible
+  pointer-events none
+  position fixed
+  right space(4)
+  bottom space(4)
+  z-index 40
+  max-width calc(100% - 2rem)
+  border 1px solid var(--ds-color-border-subtle)
+  border-radius var(--ds-control-radius)
+  padding space(2) space(4)
+  background var(--ds-color-surface)
+  color var(--ds-color-text)
+  type('small', calc(1.25 / .875))
+  box-shadow var(--ds-card-shadow)

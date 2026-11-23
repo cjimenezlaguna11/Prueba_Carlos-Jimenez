@@ -2,7 +2,7 @@
 
 ## Referencia y gobierno
 
-`Prueba/`, exportado por Figma Make, es la referencia del tema claro. Mantener composición, jerarquía, proporciones, tipografía Inter y arte acordado. Los ajustes de contraste, estados, foco e idioma documentados en la auditoría se incorporan a ambas versiones. El tema oscuro conserva la misma estructura y recursos. Los valores oscuros son la base propuesta y se verificarán sobre la interfaz renderizada. Las capturas de la referencia siguen pendientes.
+`version-a/` y su despliegue en Vercel son la referencia visual, funcional y de experiencia consolidada para `version-b/`, en ambos temas. Mantener composición, jerarquía, proporciones, tipografía Inter, recursos, estados y comportamiento de la versión A. El prototipo de Figma Make se conserva como antecedente del proyecto.
 
 ## Tokens y consumo
 
@@ -39,7 +39,7 @@ Header con marca, navegación, búsqueda, apariencia y `Accedi` → hero con CTA
 | --- | --- |
 | Header y menú | Fondo sólido legible sobre el contenido adhesivo, borde, enlaces default/hover/active/focus, apertura y cierre, un selector visible y accesible por viewport. Marca e iconos con contraste sobre ambas superficies. |
 | Hero y guía | Gradiente, texto secundario, arte decorativo, CTA primario y secundario default/hover/active/focus. Mantener legibilidad donde se combinan superficies con transparencias. |
-| Búsqueda, pills y selector | Contornos de campo visibles, placeholder, hover, focus, clear, opción seleccionada con indicación semántica y visual, disabled cuando proceda. Selector nativo con etiqueta persistente. |
+| Búsqueda, pills y selector | Contornos de campo visibles, placeholder, hover, focus, clear, opción seleccionada con indicación semántica y visual, disabled cuando proceda. Apariencia como grupo de radios nativos, con iconos y etiquetas accesibles. |
 | Catálogo, fichas y precios | Superficie y borde de card, elevación hover, foco del CTA, badge de formato, precio anterior tachado y precio actual, contador y vacío legibles. Mantener portadas 5:3 con espacio reservado. |
 | Contacto | Campos default/hover/focus/invalid/disabled y confirmación simulada. Error y éxito con texto e icono cuando proceda. El foco se distingue también sobre un campo inválido. |
 | Footer | Superficie, borde y enlaces con sus propios roles de contraste, hover y contorno de foco. |
@@ -48,4 +48,4 @@ Usar al menos 4,5:1 para texto normal y 3:1 para texto grande y para límites o 
 
 ## Paridad
 
-Comparar A y B con la misma fuente, arte, datos, copias, tamaños, preferencias y estados. Capturar claro y oscuro en 375, 768 y 1280 px, y probar `Sistema` con las dos configuraciones del SO. En claro comparar también con la referencia de Figma Make cuando esté disponible. Registrar las diferencias deliberadas y la evidencia de las pruebas.
+Comparar A y B con la misma fuente, arte, datos, copias, tamaños, preferencias y estados. Capturar claro y oscuro en 375, 768 y 1280 px, y probar `Sistema` con las dos configuraciones del SO. Registrar las diferencias y la evidencia de las pruebas.

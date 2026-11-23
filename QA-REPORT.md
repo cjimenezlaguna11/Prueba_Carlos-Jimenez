@@ -66,4 +66,25 @@ La [URL pública HTTPS](https://prueba-carlos-jimenez-version-a.vercel.app) resp
 
 ## Pendientes de verificación
 
-Quedan por verificar el recorrido con lector de pantalla, otros motores de navegador, el zoom del navegador al 200 % y una medición Lighthouse. Los resultados de axe cubren los casos automatizados ejecutados, junto con los recorridos de teclado del informe. La paridad con Laravel y el cambio de fuente a Supabase se reservan para sus respectivas fases.
+Quedan por verificar el recorrido con lector de pantalla, otros motores de navegador, el zoom del navegador al 200 % y una medición Lighthouse. Los resultados de axe cubren los casos automatizados ejecutados, junto con los recorridos de teclado del informe. El cambio de fuente a Supabase se reserva para su fase de integración.
+
+## Versione B · Laravel frente a Next.js
+
+La comparación usó Next.js en Vercel y Laravel local con el catálogo JSON. Se ejecutó en Chrome con el mismo viewport de 900 px de alto, escala de dispositivo 1, tema del sistema controlado, fuentes e imágenes cargadas y movimiento reducido. Las 60 parejas cubrieron landing completa, navegación móvil o header de escritorio, categoría, búsqueda combinada, cero resultados, ficha abierta, carrito vacío y con dos productos, formulario con errores y confirmación.
+
+| Ancho | Tema | Pares | Píxeles distintos en landing completa | Máximo en un estado |
+| --- | --- | ---: | ---: | ---: |
+| 375 px | Claro | 10 | 0,051 % | 0,077 % |
+| 375 px | Oscuro | 10 | 0,051 % | 0,063 % |
+| 768 px | Claro | 10 | 0,042 % | 0,047 % |
+| 768 px | Oscuro | 10 | 0,042 % | 0,047 % |
+| 1280 px | Claro | 10 | 0,047 % | 0,072 % |
+| 1280 px | Oscuro | 10 | 0,047 % | 0,072 % |
+
+La medición cuenta un píxel como distinto cuando algún canal RGB cambia más de 24 sobre 255. Todas las parejas tuvieron las mismas dimensiones. Coincidieron las medidas de header, hero, secciones, buscador, primera ficha y footer a una décima de píxel. Se ajustaron las alturas de línea del hero y las fichas y el ancho del drawer móvil después de revisar la primera pasada. Se corrigió también la captura de elementos adhesivos durante la comparación del formulario. En la pasada final persistieron diferencias pequeñas en portadas y miniaturas. Laravel sirve el WebP canónico y Next.js usa su optimizador de imágenes. Menú, estados del formulario y vacío de búsqueda registraron cero píxeles distintos por encima del umbral.
+
+Pasaron la instalación con Composer desde lockfile, los requisitos de plataforma PHP, el lint de PHP, `php artisan route:list`, 12 comprobaciones PHP, `npm ci`, `npm run build` y 3 pruebas unitarias JavaScript. `php artisan optimize` generó las cachés de configuración, rutas, eventos y vistas. Un arranque local con `APP_ENV=production` y esas cachés respondió HTTP 200 en `/`, `/up` y los recursos comprobados. Composer y npm reportaron 0 avisos de seguridad. El lockfile limita la dependencia transitiva de Stylus a una versión corregida de glob, verificada con la compilación de las hojas de estilo.
+
+Pasaron las nueve pruebas de navegador. Cubren el catálogo canónico de ocho fichas, búsqueda con diacríticos, filtros combinados, controles independientes, contador, foco, carrito y subtotal, persistencia, navegación del modal con teclado, validación, envío simulado y temas. Se comprobó el reflujo desde 320 px, los cambios alrededor de cada breakpoint y el tema anterior al bundle. Axe no detectó infracciones de las reglas WCAG 2.1 A/AA ejecutadas para la landing y el drawer en claro y oscuro. No se capturaron errores de aplicación en los recorridos. Las capturas y `metrics.json` se generan con `npm run test:browser`.
+
+El Dockerfile de Railway está preparado con imágenes base verificadas en el registro, webroot público y health check `/up`. Este equipo carece de Docker y WSL, por lo que el build de la imagen queda pendiente. Quedan fuera de esta pasada la verificación con lector de pantalla, Lighthouse y otros motores de navegador. El despliegue de la versión B y la activación de Supabase están pendientes.

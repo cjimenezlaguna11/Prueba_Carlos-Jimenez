@@ -1,0 +1,12 @@
+/.env
+/vendor/
+/node_modules/
+/public/build/
+/public/images/
+/public/giunti-psychometrics.png
+/bootstrap/cache/*.php
+/storage/framework/views/*.php
+/storage/framework/sessions/*
+/storage/logs/*.log
+/build/
+/test-results/

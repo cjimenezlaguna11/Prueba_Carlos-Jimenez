@@ -1,0 +1,264 @@
+// Map authored styles to the same shared scale as the Next.js interface.
+space(n)
+  return unquote('calc(var(--ds-base-space-1) * ' + n + ')')
+
+type(role, leading = inherit)
+  font-size unquote('var(--ds-base-font-size-' + role + ')')
+  line-height leading
+
+weight(role)
+  font-weight unquote('var(--ds-base-font-weight-' + role + ')')
+
+colored-icon(size, radius, surface = var(--ds-color-surface-subtle))
+  display grid
+  width space(size)
+  height space(size)
+  place-items center
+  border-radius radius
+  color var(--ds-color-text-interactive)
+  background surface
+
+transition-colors()
+  transition-property color, background-color, border-color, outline-color, fill, stroke
+  transition-duration var(--ds-transition-fast)
+  transition-timing-function cubic-bezier(.4, 0, .2, 1)
+
+@font-face
+  font-family Inter
+  src url('./inter.woff2') format('woff2')
+  font-display swap
+  font-weight 100 900
+
+@font-face
+  font-family 'Inter Fallback'
+  src local(Arial)
+  ascent-override 89.79%
+  descent-override 22.36%
+  line-gap-override 0%
+  size-adjust 107.89%
+
+*, *::before, *::after, ::backdrop
+  box-sizing border-box
+  border 0 solid
+  margin 0
+  padding 0
+
+html
+  -webkit-text-size-adjust 100%
+  -webkit-tap-highlight-color transparent
+  background var(--ds-color-page)
+  font-family Inter, 'Inter Fallback', var(--ds-text-font)
+  line-height var(--ds-base-font-leading-body)
+  scroll-behavior smooth
+  scroll-padding-top var(--ds-header-scroll-offset)
+
+body
+  background var(--ds-color-page)
+  color var(--ds-color-text)
+  -webkit-font-smoothing antialiased
+
+h1, h2, h3
+  font-size inherit
+  font-weight inherit
+
+a
+  color inherit
+  text-decoration inherit
+
+ul
+  list-style none
+
+button, input, textarea
+  font inherit
+  letter-spacing inherit
+  color inherit
+  background-color transparent
+  border-radius 0
+
+button
+  appearance button
+
+textarea
+  resize vertical
+
+input::placeholder, textarea::placeholder
+  opacity 1
+
+img, svg
+  display block
+  vertical-align middle
+
+img
+  max-width 100%
+  height auto
+
+button:not(:disabled), summary
+  cursor pointer
+
+button:disabled
+  cursor not-allowed
+
+summary
+  list-style none
+
+summary::-webkit-details-marker
+  display none
+
+input[type='search']::-webkit-search-cancel-button
+  appearance none
+
+[hidden]
+  display none !important
+
+:focus-visible
+  outline var(--ds-focus-width) solid var(--focus-color, var(--ds-color-focus))
+  outline-offset var(--ds-focus-offset)
+
+@media (prefers-reduced-motion: reduce)
+  html
+    scroll-behavior auto
+  *, *::before, *::after
+    transition-duration 0s !important
+    animation-duration 0s !important
+
+.visually-hidden
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+.icon
+  flex-shrink 0
+
+.shell
+  width 100%
+  max-width var(--ds-layout-content-max)
+  padding-inline var(--ds-layout-gutter)
+  margin-inline auto
+  @media (min-width: md)
+    padding-inline var(--ds-layout-gutter-wide)
+
+.skip-link
+  position fixed
+  top space(2)
+  left space(2)
+  z-index 50
+  translate 0 -200%
+  padding space(3) space(4)
+  border-radius var(--ds-control-radius)
+  background var(--ds-color-surface)
+  color var(--ds-color-text-interactive)
+  weight('semibold')
+  &:focus
+    translate 0 0
+
+.eyebrow
+  type('eyebrow')
+  weight('semibold')
+  letter-spacing .14em
+  color var(--ds-color-text-interactive)
+  text-transform uppercase
+
+.section-intro
+  max-width 42rem
+  &__title
+    type('section', 1.2)
+    weight('extrabold')
+    letter-spacing -.025em
+    @media (min-width: sm)
+      type('section-wide', calc(2.5 / 2.25))
+    &--after-eyebrow
+      margin-top space(3)
+  &__copy
+    margin-top space(4)
+    type('lead', calc(1.75 / 1.125))
+    color var(--ds-color-text-muted)
+
+.button
+  display inline-flex
+  min-height var(--ds-control-target)
+  align-items center
+  justify-content center
+  gap space(2)
+  border-radius var(--ds-control-radius)
+  padding-inline space(5)
+  text-align center
+  type('label')
+  weight('semibold')
+  transition-colors()
+  &--primary
+    background var(--ds-button-bg)
+    color var(--ds-button-text)
+    &:hover
+      background var(--ds-button-hover)
+    &:active
+      background var(--ds-button-active)
+    &:disabled
+      background var(--ds-button-disabled-bg)
+      color var(--ds-button-disabled-text)
+  &--secondary
+    border 1px solid var(--ds-color-border-control)
+    background var(--ds-color-surface)
+    color var(--ds-color-text-interactive)
+    transition-colors()
+    @media (hover: hover)
+      &:hover
+        border-color var(--ds-color-text-interactive)
+        background var(--ds-color-interactive-hover)
+    &:active
+      background var(--ds-color-interactive-active)
+
+.icon-button, .cart-square
+  width var(--ds-control-target)
+  height var(--ds-control-target)
+  flex-shrink 0
+  place-items center
+  border-radius var(--ds-control-radius)
+  transition-colors()
+
+.icon-button
+  display inline-grid
+  color var(--ds-color-text)
+  @media (hover: hover)
+    &:hover
+      background var(--ds-color-interactive-hover)
+  &:active
+    background var(--ds-color-interactive-active)
+
+.cart-square
+  display grid
+  &:is(:disabled, [aria-disabled='true'])
+    cursor not-allowed
+    background var(--ds-button-disabled-bg)
+    color var(--ds-button-disabled-text)
+
+.field
+  width 100%
+  min-width 0
+  border 1px solid var(--ds-input-border)
+  border-radius var(--ds-control-radius)
+  padding-inline space(4)
+  type('body', 1.5)
+  background var(--ds-input-bg)
+  color var(--ds-input-text)
+  transition-colors()
+  &::placeholder
+    color var(--ds-input-placeholder)
+  &:hover:not(:disabled)
+    border-color var(--ds-input-border-hover)
+  &[aria-invalid='true']
+    border-color var(--ds-input-invalid)
+    background var(--ds-input-invalid-bg)
+  &:disabled
+    background var(--ds-input-disabled-bg)
+    color var(--ds-input-disabled-text)
+
+.script-message
+  margin-top space(3)
+  type('small', calc(1.25 / .875))
+  color var(--ds-color-text-muted)

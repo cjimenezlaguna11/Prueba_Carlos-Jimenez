@@ -1,0 +1,321 @@
+.site-header
+  position sticky
+  top 0
+  z-index 40
+  border-bottom 1px solid var(--ds-header-border)
+  background var(--ds-header-bg)
+  &__inner
+    display flex
+    min-height var(--ds-header-height-small)
+    align-items center
+    justify-content space-between
+    gap space(2)
+    @media (min-width: md)
+      min-height var(--ds-header-height-wide)
+    @media (min-width: lg)
+      gap space(4)
+  &__controls
+    display flex
+    min-width 0
+    align-items center
+    justify-content flex-end
+    gap space(1)
+    @media (min-width: lg)
+      flex 1
+      gap space(3)
+  &__desktop
+    display none
+    @media (min-width: lg)
+      display block
+      margin-right auto
+  &__mobile, &__toggle
+    @media (min-width: lg)
+      display none
+  &__list
+    display flex
+    flex-direction column
+    @media (min-width: lg)
+      flex-direction row
+      gap space(1)
+  &__link
+    display flex
+    min-height var(--ds-control-target)
+    align-items center
+    padding-inline space(3)
+    border-radius var(--ds-control-radius)
+    type('label')
+    weight('medium')
+    white-space nowrap
+    @media (hover: hover)
+      &:hover
+        background var(--ds-header-hover)
+        color var(--ds-color-text-interactive)
+    &:active
+      background var(--ds-header-active)
+  &__cart
+    position relative
+  &__cart-badge
+    position absolute
+    top space(.5)
+    right space(.5)
+    display grid
+    min-width space(5)
+    min-height space(5)
+    place-items center
+    border-radius var(--ds-pill-radius)
+    padding-inline space(1)
+    background var(--ds-button-bg)
+    color var(--ds-button-text)
+    type('caption', 1)
+    weight('bold')
+    font-variant-numeric tabular-nums
+  &__panel
+    position absolute
+    inset 100% 0 auto
+    z-index auto
+    display none
+    max-height calc(100dvh - var(--ds-header-height-small))
+    flex-direction column
+    gap space(3)
+    overflow-y auto
+    border-bottom 1px solid var(--ds-header-border)
+    padding space(3) space(5)
+    background var(--ds-header-bg)
+    &--open
+      display flex
+    @media (min-width: md)
+      max-height calc(100dvh - var(--ds-header-height-wide))
+    @media (min-width: lg)
+      position static
+      display flex
+      max-height none
+      flex-direction row
+      align-items center
+      overflow visible
+      border 0
+      padding 0
+  &__divider
+    display none
+    @media (min-width: lg)
+      display block
+      height space(7)
+      width 1px
+      flex-shrink 0
+      background var(--ds-header-border)
+  &__demo
+    position relative
+  &__login
+    width 100%
+    @media (min-width: lg)
+      width auto
+  &__message
+    margin-top space(2)
+    border 1px solid var(--ds-color-border-subtle)
+    border-radius var(--ds-control-radius)
+    background var(--ds-color-surface)
+    padding space(3)
+    color var(--ds-color-text)
+    type('small', calc(1.25 / .875))
+    box-shadow var(--ds-card-shadow)
+    @media (min-width: lg)
+      position absolute
+      right 0
+      width space(56)
+
+.brand
+  max-width 100%
+  border-radius var(--ds-control-radius)
+  background var(--ds-base-color-white)
+  &--header
+    display flex
+    min-width 0
+    align-items center
+  &--footer
+    width fit-content
+  &__image
+    width space(44)
+    @media (min-width: md)
+      width space(48)
+    @media (min-width: lg)
+      width space(50)
+
+.appearance
+  min-width 0
+  &__control
+    display flex
+    width fit-content
+    align-items center
+    gap space(.5)
+    border 1px solid var(--ds-color-border-subtle)
+    border-radius var(--ds-control-radius)
+    background var(--ds-color-surface-subtle)
+    padding space(.5)
+  &__option
+    position relative
+    &:has(:enabled)
+      cursor pointer
+    &:has(:enabled):hover .appearance__icon
+      background var(--ds-color-interactive-hover)
+      color var(--ds-color-text-interactive)
+    &:has(:focus-visible) .appearance__icon
+      position relative
+      z-index 1
+      outline var(--ds-focus-width) solid var(--ds-appearance-focus)
+      outline-offset var(--ds-focus-offset)
+    input
+      position absolute
+      inset 0
+      z-index 10
+      width 100%
+      height 100%
+      cursor inherit
+      opacity 0
+  &__icon
+    display grid
+    width space(10)
+    height space(10)
+    place-items center
+    border 1px solid transparent
+    border-radius var(--ds-control-radius)
+    color var(--ds-color-text-muted)
+    transition-colors()
+
+:root[data-theme-preference='light'] .appearance__option[data-preference='light'] .appearance__icon,
+:root[data-theme-preference='dark'] .appearance__option[data-preference='dark'] .appearance__icon,
+:root[data-theme-preference='system'] .appearance__option[data-preference='system'] .appearance__icon,
+:root:not([data-theme-preference]) .appearance__option[data-preference='system'] .appearance__icon
+  background var(--ds-appearance-bg)
+  color var(--ds-color-text-interactive)
+  border-color var(--ds-appearance-border)
+
+.hero
+  background unquote('linear-gradient(to bottom in oklab, var(--ds-hero-gradient-start), var(--ds-hero-gradient-end))')
+  &__inner
+    display grid
+    align-items center
+    gap space(10)
+    padding-block space(14)
+    @media (min-width: lg)
+      grid-template-columns minmax(0, 1.1fr) minmax(0, .9fr)
+      padding-block space(20)
+  &__title
+    margin-top space(5)
+    type('hero', var(--ds-base-font-leading-tight))
+    weight('extrabold')
+    letter-spacing -.03em
+    @media (min-width: sm)
+      type('hero-medium', var(--ds-base-font-leading-tight))
+    @media (min-width: lg)
+      type('hero-wide', var(--ds-base-font-leading-tight))
+  &__copy
+    margin-top space(6)
+    max-width 36rem
+    type('lead', var(--ds-base-font-leading-relaxed))
+    color var(--ds-hero-copy)
+  &__actions
+    display flex
+    flex-direction column
+    gap space(3)
+    margin-top space(9)
+    @media (min-width: sm)
+      flex-direction row
+  &__action
+    min-height space(12)
+    padding-inline space(6)
+  &__image
+    width 100%
+    max-width 520px
+    margin-inline auto
+
+.guidance
+  padding-block space(16)
+  background var(--ds-color-surface-subtle)
+  @media (min-width: lg)
+    padding-block space(20)
+  &__items
+    display grid
+    gap space(6)
+    margin-top space(10)
+    @media (min-width: md)
+      grid-template-columns repeat(3, minmax(0, 1fr))
+  &__item
+    border 1px solid var(--ds-color-border-subtle)
+    border-radius var(--ds-card-radius)
+    background var(--ds-card-bg)
+    padding space(7)
+  &__icon
+    colored-icon(12, var(--ds-control-radius))
+  &__title
+    margin-top space(5)
+    type('lead', var(--ds-base-font-leading-snug))
+    weight('bold')
+  &__copy
+    margin-top space(2)
+    type('label', var(--ds-base-font-leading-relaxed))
+    color var(--ds-color-text-muted)
+
+.site-footer
+  --focus-color var(--ds-footer-focus)
+  background var(--ds-footer-bg)
+  color var(--ds-footer-text)
+  &__inner
+    padding-block space(14)
+  &__top
+    display flex
+    flex-direction column
+    gap space(10)
+    @media (min-width: md)
+      flex-direction row
+      justify-content space-between
+  &__description
+    max-width 24rem
+  &__copy
+    margin-top space(3)
+    line-height var(--ds-base-font-leading-relaxed)
+    color var(--ds-footer-muted)
+  &__links
+    display flex
+    flex-direction column
+    gap space(1)
+    @media (min-width: sm)
+      flex-direction row
+      flex-wrap wrap
+  &__link
+    display inline-flex
+    min-height var(--ds-control-target)
+    align-items center
+    border-radius var(--ds-control-radius)
+    padding-inline space(3)
+    type('label')
+    weight('medium')
+    color var(--ds-footer-muted)
+    @media (hover: hover)
+      &:hover
+        background var(--ds-footer-hover)
+        color var(--ds-footer-text)
+  &__bottom
+    display flex
+    flex-direction column
+    gap space(5)
+    margin-top space(10)
+    border-top 1px solid var(--ds-footer-border)
+    padding-top space(6)
+    @media (min-width: sm)
+      flex-direction row
+      align-items center
+      justify-content space-between
+  &__legal
+    type('small', calc(1.25 / .875))
+    color var(--ds-footer-muted)
+    p + p
+      margin-top space(2)
+  &__social
+    display flex
+    flex-wrap wrap
+    gap space(2)
+    @media (min-width: sm)
+      flex-shrink 0
+  &__icon
+    colored-icon(11, var(--ds-pill-radius), transparent)
+    color var(--ds-footer-muted)
+    border 1px solid var(--ds-footer-border)
