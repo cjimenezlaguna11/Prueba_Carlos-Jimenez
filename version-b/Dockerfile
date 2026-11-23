@@ -25,7 +25,7 @@ RUN composer install --no-dev --no-interaction --prefer-dist --classmap-authorit
     composer check-platform-reqs --no-dev
 
 FROM php-base AS production
-ENV APP_ENV=production APP_DEBUG=false APP_LOCALE=it SESSION_DRIVER=array CACHE_STORE=array CATALOG_SOURCE=json PORT=8080
+ENV APP_ENV=production APP_DEBUG=false APP_LOCALE=it LOG_CHANNEL=stderr SESSION_DRIVER=array CACHE_STORE=array CATALOG_SOURCE=json PORT=8080
 COPY version-b/app/ ./app/
 COPY version-b/artisan ./
 COPY version-b/bootstrap/ ./bootstrap/
@@ -39,6 +39,8 @@ COPY --from=assets /source/version-b/public/ ./public/
 COPY --from=assets /source/version-b/build/ ./build/
 COPY version-b/docker/site.conf /etc/apache2/sites-available/000-default.conf
 RUN printf 'Listen ${PORT}\n' > /etc/apache2/ports.conf && \
-    a2enmod rewrite && chown -R www-data:www-data storage bootstrap/cache
+    a2enmod rewrite && \
+    mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8080
 CMD ["sh", "-c", "php artisan optimize && exec apache2-foreground"]
