@@ -39,9 +39,10 @@ COPY --from=assets /source/version-b/public/ ./public/
 COPY --from=assets /source/version-b/build/ ./build/
 COPY version-b/docker/site.conf /etc/apache2/sites-available/000-default.conf
 RUN printf 'Listen ${PORT}\n' > /etc/apache2/ports.conf && \
-    a2enmod rewrite && \
+    a2dismod mpm_event mpm_worker && a2enmod mpm_prefork rewrite && \
     mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache && \
-    chown -R www-data:www-data storage bootstrap/cache
+    chown -R www-data:www-data storage bootstrap/cache && \
+    apache2ctl configtest
 EXPOSE 8080
 RUN php artisan view:cache --no-ansi
 CMD ["sh", "-c", "php artisan optimize --no-ansi && exec apache2-foreground"]
