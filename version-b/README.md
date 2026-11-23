@@ -53,7 +53,9 @@ npm run test:browser
 
 La suite abre Next.js en el dominio público y Laravel local en el puerto 8100. Define `APP_A_URL` o `APP_B_URL` para usar otras instancias. `CHROME_PATH` permite seleccionar un ejecutable. Las capturas, diferencias y `metrics.json` se guardan en `test-results/parity/` o en `SCREENSHOT_DIR`. El informe de QA documenta la evidencia y el alcance de las pruebas. Las portadas usan el mismo WebP original. Next.js puede recomprimir sus imágenes en función del viewport. [Informe de QA](../QA-REPORT.md)
 
-## Preparación de Railway
+## Producción en Railway
+
+La versión B está disponible en [Railway](https://version-b-production-f8e10669.up.railway.app). Compárala con [la versión A en Vercel](https://prueba-carlos-jimenez-version-a.vercel.app). El primer despliegue de Laravel verificado salió de `4ac1f23` en `main`.
 
 El contexto Docker es la raíz del monorepo. Railway limita el checkout al Root Directory configurado. El valor `/` conserva las entradas compartidas que el Dockerfile lee desde `specs/`, `assets/catalog/` y `version-a/public/`. Las etapas del Dockerfile compilan los recursos con Gulp, instalan las dependencias PHP desde el lockfile de Composer y sirven `version-b/public/` con Apache y PHP.
 
@@ -62,4 +64,6 @@ docker build -f version-b/Dockerfile -t giunti-version-b .
 docker run --rm -p 8100:8080 --env-file version-b/.env -e APP_ENV=production -e APP_DEBUG=false -e PORT=8080 giunti-version-b
 ```
 
-Cuando se apruebe el despliegue, configurar `RAILWAY_DOCKERFILE_PATH=/version-b/Dockerfile`, raíz `/`, rama `main` y health check `/up`. Definir `APP_ENV=production`, `APP_DEBUG=false`, una `APP_KEY` generada y estable, `APP_URL` con el dominio HTTPS y `CATALOG_SOURCE=json`. Railway inyecta `PORT`. Vigilar cambios en `version-b/`, `specs/`, `assets/catalog/` y el logo oficial en `version-a/public/giunti-psychometrics.png`. Los valores de sesión y caché por defecto para la imagen son `array`. [Arquitectura de despliegue](../specs/deployment-architecture.md).
+El servicio `version-b` está en el entorno `production`, conectado a `main`. Usa el builder Dockerfile con la ruta `/version-b/Dockerfile`, raíz `/` y health check `/up`. Apache escucha en el `PORT` inyectado por Railway. El servicio vigila `version-b/`, `specs/`, `assets/catalog/` y el logo oficial en `version-a/public/giunti-psychometrics.png`.
+
+Las variables de producción son `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL` con el dominio HTTPS, `CATALOG_SOURCE=json`, `SESSION_DRIVER=array` y `CACHE_STORE=array`. `APP_KEY` se genera una vez por entorno y se guarda en Railway. [Arquitectura de despliegue](../specs/deployment-architecture.md)

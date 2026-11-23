@@ -87,10 +87,23 @@ Pasaron la instalación con Composer desde lockfile, los requisitos de plataform
 
 Pasaron las nueve pruebas de navegador. Cubren el catálogo canónico de ocho fichas, búsqueda con diacríticos, filtros combinados, controles independientes, contador, foco, carrito y subtotal, persistencia, navegación del modal con teclado, validación, envío simulado y temas. Se comprobó el reflujo desde 320 px, los cambios alrededor de cada breakpoint y el tema anterior al bundle. Axe no detectó infracciones de las reglas WCAG 2.1 A/AA ejecutadas para la landing y el drawer en claro y oscuro. No se capturaron errores de aplicación en los recorridos. Las capturas y `metrics.json` se generan con `npm run test:browser`.
 
-El Dockerfile de Railway está preparado con imágenes base verificadas en el registro, webroot público y health check `/up`. Este equipo carece de Docker y WSL, por lo que el build de la imagen queda pendiente. Quedan fuera de esta pasada la verificación con lector de pantalla, Lighthouse y otros motores de navegador. El despliegue de la versión B y la activación de Supabase están pendientes.
+El Dockerfile de Railway quedó preparado con imágenes base verificadas en el registro, webroot público y health check `/up`. Este equipo carece de Docker y WSL. La imagen se validó posteriormente en el builder remoto. Quedaron fuera de esta pasada la verificación con lector de pantalla, Lighthouse y otros motores de navegador.
 
 ### Prevalidación de la publicación de Laravel
 
 Se publicó `4dd25d4` en `origin/main`. Pasaron Composer desde lockfile, `npm ci`, Gulp, 12 comprobaciones PHP y 3 pruebas JavaScript de Laravel. Una copia limpia de Next.js pasó `npm ci`, TypeScript, ESLint, las 10 pruebas unitarias y el build de producción. Vercel respondió HTTP 200 con las ocho fichas. [Versión A en producción](https://prueba-carlos-jimenez-version-a.vercel.app)
 
-La raíz prevista de Railway es `/` para dar acceso al contexto compartido. El equipo no tiene Docker. La compilación de la imagen, el health check público y la matriz HTTPS de la versión B requieren activar el servicio de Railway.
+### Validación de ambas versiones en producción
+
+| Versión | URL pública HTTPS | Commit comprobado | Origen |
+| --- | --- | --- | --- |
+| A · Next.js | [Vercel](https://prueba-carlos-jimenez-version-a.vercel.app) | `4ac1f23` | JSON |
+| B · Laravel | [Railway](https://version-b-production-f8e10669.up.railway.app) | `4ac1f23` | JSON |
+
+Railway desplegó el servicio `version-b` en `production` desde `main`, con raíz `/`, builder Dockerfile, ruta `/version-b/Dockerfile` y health check `/up`. El builder remoto completó `npm ci`, Gulp, instalación y requisitos de plataforma de Composer, compilación Blade y la comprobación de Apache. La imagen incluye el manifiesto de Composer para que Blade resuelva el namespace y crea los directorios de caché de Laravel. Apache valida su configuración con `prefork` como único MPM durante el build y el arranque. Los logs confirmaron PHP 8.4.28, Apache 2.4.71 y HTTP 200 de `RailwayHealthCheck/1.0`. Apache registró un aviso de nombre de servidor sin impacto en el arranque. [Deployment verificado](https://railway.com/project/500e7bd3-babf-4b36-9a6b-0c92bee7f824/service/3bbdae15-c9fb-4d55-9b0b-bc79d02bed6a?environmentId=3585caa0-2aa7-4005-943c-5f71e53d3605&id=bec5bf31-3698-4c01-9066-727685ae0dd8)
+
+La raíz pública y `/up` respondieron HTTP 200 sin sesión. Los ocho IDs de Laravel coincidieron en orden con el JSON canónico. Respondieron HTTP 200 los recursos CSS, JS, Inter, logo, hero y ocho portadas. Durante la activación se observaron respuestas HTTP 404 transitorias. Cinco rondas posteriores de peticiones y la repetición completa de las pruebas se completaron correctamente.
+
+Pasaron las nueve pruebas de navegador sobre las dos URLs públicas. Cubrieron navegación y teclado, búsqueda y filtros, fichas, carrito y subtotal, persistencia, contacto simulado, footer, temas y reflujo. Axe no registró infracciones en las reglas WCAG 2.1 A/AA ejecutadas. La suite no capturó errores de aplicación. Las 60 parejas de capturas de 375, 768 y 1280 px en claro y oscuro tuvieron dimensiones idénticas. El máximo fue **0,077 %** de píxeles con una diferencia superior a 24/255 en algún canal RGB. Para reproducir el resultado usa `npm run test:browser` en `version-b/` con `APP_A_URL` y `APP_B_URL` apuntando a las URLs de producción.
+
+El workspace de Railway usa el crédito de prueba disponible. La continuidad del dominio depende de la vigencia de ese plan. El catálogo sigue usando JSON y la activación de Supabase queda pendiente.
