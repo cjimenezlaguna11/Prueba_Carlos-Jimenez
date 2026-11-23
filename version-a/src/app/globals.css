@@ -1,0 +1,208 @@
+@import 'tailwindcss';
+@import '../../.generated/design-tokens.css';
+@import '../../.generated/breakpoints.css';
+
+@theme inline {
+  --spacing: var(--ds-base-space-1);
+  --font-sans: var(--inter), var(--ds-text-font);
+  --font-weight-normal: var(--ds-base-font-weight-regular);
+  --font-weight-medium: var(--ds-base-font-weight-medium);
+  --font-weight-semibold: var(--ds-base-font-weight-semibold);
+  --font-weight-bold: var(--ds-base-font-weight-bold);
+  --font-weight-extrabold: var(--ds-base-font-weight-extrabold);
+  --text-xs: var(--ds-base-font-size-caption);
+  --text-eyebrow: var(--ds-base-font-size-eyebrow);
+  --text-sm: var(--ds-base-font-size-small);
+  --text-label: var(--ds-base-font-size-label);
+  --text-base: var(--ds-base-font-size-body);
+  --text-lg: var(--ds-base-font-size-lead);
+  --text-xl: var(--ds-base-font-size-card-title);
+  --text-2xl: var(--ds-base-font-size-price);
+  --text-3xl: var(--ds-base-font-size-section);
+  --text-4xl: var(--ds-base-font-size-section-wide);
+  --text-hero: var(--ds-base-font-size-hero);
+  --text-hero-medium: var(--ds-base-font-size-hero-medium);
+  --text-hero-wide: var(--ds-base-font-size-hero-wide);
+  --leading-snug: var(--ds-base-font-leading-snug);
+  --leading-relaxed: var(--ds-base-font-leading-relaxed);
+  --color-page: var(--ds-color-page);
+  --color-surface: var(--ds-color-surface);
+  --color-subtle: var(--ds-color-surface-subtle);
+  --color-ink: var(--ds-color-text);
+  --color-muted: var(--ds-color-text-muted);
+  --color-brand: var(--ds-color-text-interactive);
+  --color-line: var(--ds-color-border-subtle);
+  --color-control: var(--ds-color-border-control);
+  --color-hover: var(--ds-color-interactive-hover);
+  --color-active: var(--ds-color-interactive-active);
+  --color-accent: var(--ds-color-accent);
+  --color-danger: var(--ds-feedback-error-text);
+  --color-success: var(--ds-feedback-success-text);
+  --color-success-panel: var(--ds-feedback-success-bg);
+  --color-header: var(--ds-header-bg);
+  --color-hero-wash: var(--ds-hero-gradient-start);
+  --color-card: var(--ds-card-bg);
+  --color-footer: var(--ds-footer-bg);
+  --color-footer-ink: var(--ds-footer-text);
+  --color-footer-muted: var(--ds-footer-muted);
+  --color-footer-line: var(--ds-footer-border);
+  --color-footer-hover: var(--ds-footer-hover);
+  --radius-card: var(--ds-card-radius);
+  --radius-ctl: var(--ds-control-radius);
+  --radius-pill: var(--ds-pill-radius);
+  --shadow-card: var(--ds-card-shadow);
+  --shadow-lift: var(--ds-card-shadow-hover);
+  --default-transition-duration: var(--ds-transition-fast);
+}
+
+@layer base {
+  html {
+    background: var(--ds-color-page);
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--ds-header-scroll-offset);
+  }
+
+  body {
+    @apply font-sans;
+    background: var(--ds-color-page);
+    color: var(--ds-color-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: var(--ds-focus-width) solid var(--focus-color, var(--ds-color-focus));
+    outline-offset: var(--ds-focus-offset);
+  }
+
+  footer { --focus-color: var(--ds-footer-focus); }
+  button:not(:disabled), summary, select:not(:disabled) { cursor: pointer; }
+  button:disabled, select:disabled { cursor: not-allowed; }
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  input[type='search']::-webkit-search-cancel-button { appearance: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
+  }
+}
+
+@layer components {
+  .cart-square {
+    @apply grid size-(--ds-control-target) shrink-0 place-items-center rounded-ctl transition-colors;
+  }
+
+  .cart-square:is(:disabled, [aria-disabled='true']) {
+    cursor: not-allowed;
+    background: var(--ds-button-disabled-bg);
+    color: var(--ds-button-disabled-text);
+  }
+
+  .cart-drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    margin: 0;
+    padding: 0;
+    width: min(calc(100% - var(--ds-layout-gutter)), 28rem);
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    overflow: hidden;
+    background: var(--ds-color-surface);
+    color: var(--ds-color-text);
+    box-shadow: var(--ds-card-shadow-hover);
+  }
+
+  .cart-drawer[open] { animation: cart-enter var(--ds-transition-fast) ease-out; }
+  .cart-drawer::backdrop {
+    background: color-mix(in srgb, var(--ds-base-color-night-footer) 68%, transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  html:has(.cart-drawer[open]) { overflow: hidden; }
+
+  .container-shell {
+    @apply mx-auto w-full px-(--ds-layout-gutter) md:px-(--ds-layout-gutter-wide);
+    max-width: var(--ds-layout-content-max);
+  }
+
+  .skip-link {
+    @apply fixed top-2 left-2 z-50 -translate-y-[200%] rounded-ctl bg-surface px-4 py-3 font-semibold text-brand focus:translate-y-0;
+  }
+
+  .eyebrow { @apply text-eyebrow font-semibold tracking-[0.14em] text-brand uppercase; }
+  .section-title { @apply text-3xl font-extrabold tracking-tight sm:text-4xl; }
+
+  .button {
+    @apply inline-flex min-h-(--ds-control-target) items-center justify-center gap-2 rounded-ctl px-5 text-center text-label font-semibold transition-colors;
+  }
+
+  .button-primary { background: var(--ds-button-bg); color: var(--ds-button-text); }
+  .button-primary:hover { background: var(--ds-button-hover); }
+  .button-primary:active { background: var(--ds-button-active); }
+  .button-primary:disabled { background: var(--ds-button-disabled-bg); color: var(--ds-button-disabled-text); }
+  .button-secondary { @apply border border-control bg-surface text-brand hover:border-brand hover:bg-hover active:bg-active; }
+
+  .icon-button {
+    @apply inline-grid size-(--ds-control-target) shrink-0 place-items-center rounded-ctl text-ink transition-colors hover:bg-hover active:bg-active;
+  }
+
+  .field-control {
+    @apply w-full min-w-0 rounded-ctl border px-4 text-base transition-colors;
+    background: var(--ds-input-bg);
+    color: var(--ds-input-text);
+    border-color: var(--ds-input-border);
+  }
+
+  .field-control::placeholder { color: var(--ds-input-placeholder); }
+  .field-control:hover:not(:disabled) { border-color: var(--ds-input-border-hover); }
+  .field-control[aria-invalid='true'] { border-color: var(--ds-input-invalid); background: var(--ds-input-invalid-bg); }
+  .field-control:disabled { background: var(--ds-input-disabled-bg); color: var(--ds-input-disabled-text); }
+
+  .appearance-control {
+    @apply flex w-fit items-center gap-0.5 rounded-ctl border border-line bg-subtle p-0.5;
+  }
+
+  .appearance-icon {
+    @apply grid size-10 place-items-center rounded-ctl border border-transparent text-muted transition-colors;
+  }
+
+  .appearance-option { position: relative; }
+  .appearance-option:has(:enabled) { cursor: pointer; }
+  .appearance-option:has(:enabled):hover .appearance-icon { @apply bg-hover text-brand; }
+  .appearance-option:has(:focus-visible) .appearance-icon {
+    position: relative;
+    z-index: 1;
+    outline: var(--ds-focus-width) solid var(--ds-appearance-focus);
+    outline-offset: var(--ds-focus-offset);
+  }
+
+  :root[data-theme-preference='light'] .appearance-option[data-preference='light'] .appearance-icon,
+  :root[data-theme-preference='dark'] .appearance-option[data-preference='dark'] .appearance-icon,
+  :root[data-theme-preference='system'] .appearance-option[data-preference='system'] .appearance-icon,
+  :root:not([data-theme-preference]) .appearance-option[data-preference='system'] .appearance-icon {
+    background: var(--ds-appearance-bg);
+    color: var(--ds-color-text-interactive);
+    border-color: var(--ds-appearance-border);
+  }
+
+  .category-pill {
+    @apply inline-flex min-h-(--ds-control-target) max-w-full items-center gap-2 rounded-pill border px-4 py-1.5 text-left text-sm font-semibold transition-colors;
+    background: var(--ds-pill-bg);
+    color: var(--ds-pill-text);
+    border-color: var(--ds-pill-border);
+  }
+
+  .category-pill:hover { background: var(--ds-pill-hover); }
+  .category-pill:active { background: var(--ds-pill-active); }
+  .category-pill[aria-pressed='true'] {
+    background: var(--ds-pill-selected-bg);
+    color: var(--ds-pill-selected-text);
+    border-color: var(--ds-pill-selected-bg);
+  }
+}
+
+@keyframes cart-enter {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}

@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.generated/
+public/images/
+next-env.d.ts
+*.tsbuildinfo
+.env*
+!.env.example
+*.log
