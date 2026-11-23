@@ -43,4 +43,5 @@ RUN printf 'Listen ${PORT}\n' > /etc/apache2/ports.conf && \
     mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8080
-CMD ["sh", "-c", "php artisan optimize && exec apache2-foreground"]
+RUN php -d display_errors=stderr -d zend.exception_ignore_args=1 artisan view:cache --no-ansi -vvv
+CMD ["sh", "-c", "php -d display_errors=stderr -d zend.exception_ignore_args=1 artisan optimize --no-ansi -vvv && exec apache2-foreground"]
