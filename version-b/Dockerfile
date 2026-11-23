@@ -45,4 +45,4 @@ RUN printf 'Listen ${PORT}\n' > /etc/apache2/ports.conf && \
     apache2ctl configtest
 EXPOSE 8080
 RUN php artisan view:cache --no-ansi
-CMD ["sh", "-c", "php artisan optimize --no-ansi && exec apache2-foreground"]
+CMD ["sh", "-c", "a2dismod mpm_event mpm_worker && a2enmod mpm_prefork rewrite && apache2ctl configtest && php artisan optimize --no-ansi && exec apache2-foreground"]
