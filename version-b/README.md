@@ -55,7 +55,7 @@ La suite abre Next.js en el dominio público y Laravel local en el puerto 8100. 
 
 ## Preparación de Railway
 
-El contexto Docker es la raíz del monorepo. Las etapas fijadas en el Dockerfile compilan con Gulp, instalan Composer desde el lockfile y sirven únicamente `version-b/public/` a través de Apache y PHP.
+El contexto Docker es la raíz del monorepo. Railway limita el checkout al Root Directory configurado. El valor `/` conserva las entradas compartidas que el Dockerfile lee desde `specs/`, `assets/catalog/` y `version-a/public/`. Las etapas del Dockerfile compilan los recursos con Gulp, instalan las dependencias PHP desde el lockfile de Composer y sirven `version-b/public/` con Apache y PHP.
 
 ```sh
 docker build -f version-b/Dockerfile -t giunti-version-b .

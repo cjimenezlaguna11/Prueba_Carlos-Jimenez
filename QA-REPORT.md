@@ -88,3 +88,9 @@ Pasaron la instalación con Composer desde lockfile, los requisitos de plataform
 Pasaron las nueve pruebas de navegador. Cubren el catálogo canónico de ocho fichas, búsqueda con diacríticos, filtros combinados, controles independientes, contador, foco, carrito y subtotal, persistencia, navegación del modal con teclado, validación, envío simulado y temas. Se comprobó el reflujo desde 320 px, los cambios alrededor de cada breakpoint y el tema anterior al bundle. Axe no detectó infracciones de las reglas WCAG 2.1 A/AA ejecutadas para la landing y el drawer en claro y oscuro. No se capturaron errores de aplicación en los recorridos. Las capturas y `metrics.json` se generan con `npm run test:browser`.
 
 El Dockerfile de Railway está preparado con imágenes base verificadas en el registro, webroot público y health check `/up`. Este equipo carece de Docker y WSL, por lo que el build de la imagen queda pendiente. Quedan fuera de esta pasada la verificación con lector de pantalla, Lighthouse y otros motores de navegador. El despliegue de la versión B y la activación de Supabase están pendientes.
+
+### Prevalidación de la publicación de Laravel
+
+Se publicó `4dd25d4` en `origin/main`. Pasaron Composer desde lockfile, `npm ci`, Gulp, 12 comprobaciones PHP y 3 pruebas JavaScript de Laravel. Una copia limpia de Next.js pasó `npm ci`, TypeScript, ESLint, las 10 pruebas unitarias y el build de producción. Vercel respondió HTTP 200 con las ocho fichas. [Versión A en producción](https://prueba-carlos-jimenez-version-a.vercel.app)
+
+La raíz prevista de Railway es `/` para dar acceso al contexto compartido. El equipo no tiene Docker. La compilación de la imagen, el health check público y la matriz HTTPS de la versión B requieren activar el servicio de Railway.
