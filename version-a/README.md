@@ -66,6 +66,8 @@ El diálogo nativo usa `showModal()` para aislar el fondo. El foco inicial va a 
 
 ## Producción en Vercel
 
+La aplicación está disponible en [la URL pública de producción](https://prueba-carlos-jimenez-version-a.vercel.app). El primer deployment verificado corresponde al commit `c6bbfc0` de `main`.
+
 Importar el monorepo existente `cjimenezlaguna11/Prueba_Carlos-Jimenez` en Vercel o reutilizar el proyecto vinculado a este repositorio. Usar estos ajustes:
 
 | Ajuste | Valor |

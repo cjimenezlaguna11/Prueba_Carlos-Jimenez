@@ -58,8 +58,12 @@ Se preparó una copia limpia con 63 archivos fuente de `version-a/` y sus entrad
 
 La respuesta inicial sirvió los ocho IDs del JSON en orden. El logo, el SVG del hero y las ocho portadas respondieron con HTTP 200 y coincidieron con los archivos del build. La búsqueda de referencias a localhost en código productivo y HTML inicial, y de patrones de credenciales en el contenido de entrega, no encontró coincidencias. `CATALOG_SOURCE=json` funcionó sin credenciales. El build regeneró `.generated/` y `public/images/` desde `specs/`, `scripts/` y `assets/`.
 
-La rama principal remota verificada es `main` de `cjimenezlaguna11/Prueba_Carlos-Jimenez`. El push de prueba devolvió un error de autenticación de GitHub y el panel de Vercel pidió iniciar sesión. Quedan pendientes el push, el deployment de Production y la suite sobre la URL pública HTTPS.
+## Validación en producción
+
+Tras autorizar Git Credential Manager y la app de Vercel para el monorepo, se publicó el commit `c6bbfc0` en `main`. Vercel lo desplegó en Production con estado Ready, Next.js 16.4.6, Node 24.x, raíz `version-a`, acceso a archivos compartidos, `npm ci` y `npm run build`. El registro de npm incluyó avisos por la opción de entorno `cache-dir` de la plataforma. El build terminó correctamente y npm reportó 0 vulnerabilidades. [Deployment de producción](https://vercel.com/8a11jimenezc-gmailcoms-projects/prueba-carlos-jimenez-version-a/3mCkJs5GDz61q2qvcMNJuGiwQkeH).
+
+La [URL pública HTTPS](https://prueba-carlos-jimenez-version-a.vercel.app) respondió HTTP 200 sin sesión, con HSTS. El logo oficial, el SVG del hero y las ocho portadas también respondieron HTTP 200. Las 24 pruebas de Chrome pasaron con `APP_URL` apuntando a producción. Cubrieron navegación, catálogo, filtros y detalle, carrito y subtotal, persistencia, contacto simulado, footer, temas y reflujo a 375, 768 y 1280 px, sin errores de aplicación capturados por la suite.
 
 ## Pendientes de verificación
 
-Quedan por verificar el recorrido con lector de pantalla, otros motores de navegador, el zoom del navegador al 200 %, una medición Lighthouse y la URL HTTPS de Vercel. Los resultados de axe cubren los casos automatizados ejecutados, junto con los recorridos de teclado del informe. La paridad con Laravel y el cambio de fuente a Supabase se reservan para sus respectivas fases.
+Quedan por verificar el recorrido con lector de pantalla, otros motores de navegador, el zoom del navegador al 200 % y una medición Lighthouse. Los resultados de axe cubren los casos automatizados ejecutados, junto con los recorridos de teclado del informe. La paridad con Laravel y el cambio de fuente a Supabase se reservan para sus respectivas fases.
